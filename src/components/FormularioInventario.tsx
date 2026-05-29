@@ -179,10 +179,10 @@ export default function FormularioInventario({ onSuccess }: FormularioInventario
           </select>
         </div>
 
-        {/* SECCIÓN 2: Datos Comunes (para todos los tipos) */}
-        {tipoEquipo && (
-          <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-            <h3 className="text-lg font-bold text-blue-900 mb-4">📊 Información General</h3>
+        {/* SECCIÓN 2: Información de CPU (Fusionada - datos comunes + CPU) */}
+        {tipoEquipo === 'DESKTOP' && (
+          <div className="bg-cyan-50 p-4 rounded-lg border border-cyan-200">
+            <h3 className="text-lg font-bold text-cyan-900 mb-4">🖥️ Información de CPU</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input
                 type="text"
@@ -190,7 +190,7 @@ export default function FormularioInventario({ onSuccess }: FormularioInventario
                 value={commonData.codigo_patrimonial}
                 onChange={handleChangeCommon}
                 placeholder="Código Patrimonial"
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
               />
               <input
                 type="text"
@@ -198,7 +198,7 @@ export default function FormularioInventario({ onSuccess }: FormularioInventario
                 value={commonData.serie}
                 onChange={handleChangeCommon}
                 placeholder="Serie"
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
               />
               <input
                 type="text"
@@ -206,7 +206,7 @@ export default function FormularioInventario({ onSuccess }: FormularioInventario
                 value={commonData.marca}
                 onChange={handleChangeCommon}
                 placeholder="Marca"
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
               />
               <input
                 type="text"
@@ -214,13 +214,45 @@ export default function FormularioInventario({ onSuccess }: FormularioInventario
                 value={commonData.modelo}
                 onChange={handleChangeCommon}
                 placeholder="Modelo"
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
+              />
+              <input
+                type="text"
+                name="so_cpu"
+                value={desktopData.so_cpu}
+                onChange={handleChangeDesktop}
+                placeholder="Sistema Operativo"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
+              />
+              <input
+                type="text"
+                name="procesador_cpu"
+                value={desktopData.procesador_cpu}
+                onChange={handleChangeDesktop}
+                placeholder="Procesador"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
+              />
+              <input
+                type="text"
+                name="ip_cpu"
+                value={desktopData.ip_cpu}
+                onChange={handleChangeDesktop}
+                placeholder="IP"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
+              />
+              <input
+                type="text"
+                name="ofimatica_cpu"
+                value={desktopData.ofimatica_cpu}
+                onChange={handleChangeDesktop}
+                placeholder="Ofimática"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
               />
               <select
                 name="estado"
                 value={commonData.estado}
                 onChange={handleChangeCommon}
-                className="col-span-1 sm:col-span-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                className="col-span-1 sm:col-span-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
               >
                 <option value="OPERATIVO">✅ OPERATIVO</option>
                 <option value="INOPERATIVO">❌ INOPERATIVO</option>
@@ -229,48 +261,59 @@ export default function FormularioInventario({ onSuccess }: FormularioInventario
           </div>
         )}
 
-        {/* SECCIÓN 3: Detalles específicos para DESKTOP */}
+        {/* SECCIÓN 2B: Para otros tipos de equipo (IMPRESORA, SCANNER) */}
+        {tipoEquipo && tipoEquipo !== 'DESKTOP' && (
+          <div className="bg-cyan-50 p-4 rounded-lg border border-cyan-200">
+            <h3 className="text-lg font-bold text-cyan-900 mb-4">🖥️ Información General</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <input
+                type="text"
+                name="codigo_patrimonial"
+                value={commonData.codigo_patrimonial}
+                onChange={handleChangeCommon}
+                placeholder="Código Patrimonial"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
+              />
+              <input
+                type="text"
+                name="serie"
+                value={commonData.serie}
+                onChange={handleChangeCommon}
+                placeholder="Serie"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
+              />
+              <input
+                type="text"
+                name="marca"
+                value={commonData.marca}
+                onChange={handleChangeCommon}
+                placeholder="Marca"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
+              />
+              <input
+                type="text"
+                name="modelo"
+                value={commonData.modelo}
+                onChange={handleChangeCommon}
+                placeholder="Modelo"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
+              />
+              <select
+                name="estado"
+                value={commonData.estado}
+                onChange={handleChangeCommon}
+                className="col-span-1 sm:col-span-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
+              >
+                <option value="OPERATIVO">✅ OPERATIVO</option>
+                <option value="INOPERATIVO">❌ INOPERATIVO</option>
+              </select>
+            </div>
+          </div>
+        )}
+
+        {/* SECCIÓN 3: Detalles específicos para DESKTOP (Teclado y Monitor) */}
         {tipoEquipo === 'DESKTOP' && (
           <>
-            {/* CPU */}
-            <div className="bg-cyan-50 p-4 rounded-lg border border-cyan-200">
-              <h3 className="text-lg font-bold text-cyan-900 mb-4">🖥️ Información de CPU</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  name="so_cpu"
-                  value={desktopData.so_cpu}
-                  onChange={handleChangeDesktop}
-                  placeholder="Sistema Operativo"
-                  className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
-                />
-                <input
-                  type="text"
-                  name="procesador_cpu"
-                  value={desktopData.procesador_cpu}
-                  onChange={handleChangeDesktop}
-                  placeholder="Procesador"
-                  className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
-                />
-                <input
-                  type="text"
-                  name="ip_cpu"
-                  value={desktopData.ip_cpu}
-                  onChange={handleChangeDesktop}
-                  placeholder="IP"
-                  className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
-                />
-                <input
-                  type="text"
-                  name="ofimatica_cpu"
-                  value={desktopData.ofimatica_cpu}
-                  onChange={handleChangeDesktop}
-                  placeholder="Ofimática"
-                  className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none"
-                />
-              </div>
-            </div>
-
             {/* Teclado */}
             <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
               <h3 className="text-lg font-bold text-purple-900 mb-4">⌨️ Información de Teclado</h3>
@@ -438,4 +481,4 @@ export default function FormularioInventario({ onSuccess }: FormularioInventario
       </form>
     </div>
   );
-}
+};

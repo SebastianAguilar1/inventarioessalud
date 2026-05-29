@@ -37,37 +37,49 @@ export default function VisitanteDashboard({ usuario, setUsuario }: VisitanteDas
     setLoading(true);
     try {
       // Preparar datos para Excel
-      const datosExport = equipos.map(equipo => ({
-        'ID': equipo.id,
-        'Tipo Equipo': equipo.tipo_equipo_id,
-        'Código CPU': equipo.codigo_patrimonial_cpu || '',
-        'Serie CPU': equipo.serie_cpu || '',
-        'Marca CPU': equipo.marca_cpu || '',
-        'Modelo CPU': equipo.modelo_cpu || '',
-        'Sistema Operativo': equipo.sistema_operativo || '',
-        'Procesador': equipo.procesador || '',
-        'IP': equipo.ip || '',
-        'Ofimática': equipo.ofimatica || '',
-        'Estado CPU': equipo.estado_cpu || '',
-        'Código Teclado': equipo.codigo_patrimonial_teclado || '',
-        'Serie Teclado': equipo.serie_teclado || '',
-        'Marca Teclado': equipo.marca_teclado || '',
-        'Modelo Teclado': equipo.modelo_teclado || '',
-        'Estado Teclado': equipo.estado_teclado || '',
-        'Código Monitor': equipo.codigo_patrimonial_monitor || '',
-        'Serie Monitor': equipo.serie_monitor || '',
-        'Marca Monitor': equipo.marca_monitor || '',
-        'Modelo Monitor': equipo.modelo_monitor || '',
-        'Estado Monitor': equipo.estado_monitor || '',
-        'Red Asistencial': equipo.red_asistencial || '',
-        'Gerencia': equipo.gerencia_central || '',
-        'Sub Gerencia': equipo.sub_gerencia || '',
-        'Ubicación': equipo.ubicacion || '',
-        'Piso': equipo.piso || '',
-        'Estado General': equipo.estado_equipo || '',
-        'Completado': equipo.completado ? 'Sí' : 'No',
-        'Fecha Creación': new Date(equipo.created_at).toLocaleDateString('es-BO'),
-      }));
+      const datosExport = equipos.map(equipo => {
+        const baseData = {
+          'ID': equipo.id,
+          'Tipo Equipo': equipo.tipo_equipo || '',
+          'Código Patrimonial': equipo.codigo_patrimonial || '',
+          'Serie': equipo.serie || '',
+          'Marca': equipo.marca || '',
+          'Modelo': equipo.modelo || '',
+          'Sistema Operativo': equipo.so_cpu || '',
+          'Procesador': equipo.procesador_cpu || '',
+          'IP': equipo.ip_cpu || '',
+          'Ofimática': equipo.ofimatica_cpu || '',
+          'Estado I-S': '',
+          'Estado CPU': '',
+          'Código Teclado': equipo.codigo_patrimonial_teclado || '',
+          'Serie Teclado': equipo.serie_teclado || '',
+          'Marca Teclado': equipo.marca_teclado || '',
+          'Modelo Teclado': equipo.modelo_teclado || '',
+          'Estado Teclado': equipo.estado_teclado || '',
+          'Código Monitor': equipo.codigo_patrimonial_monitor || '',
+          'Serie Monitor': equipo.serie_monitor || '',
+          'Marca Monitor': equipo.marca_monitor || '',
+          'Modelo Monitor': equipo.modelo_monitor || '',
+          'Estado Monitor': equipo.estado_monitor || '',
+          'Red Asistencial': equipo.red_asistencial || '',
+          'Gerencia': equipo.gerencia || '',
+          'Sub Gerencia': equipo.sub_gerencia || '',
+          'Ubicación': equipo.ubicacion || '',
+          'Piso': equipo.piso || '',
+          'Fecha Creación': equipo.created_at ? new Date(equipo.created_at).toLocaleDateString('es-BO') : '',
+        };
+
+        // Si es IMPRESORA o SCANNER, usar la columna izquierda (Estado I-S)
+        if (equipo.tipo_equipo === 'IMPRESORA' || equipo.tipo_equipo === 'SCANNER') {
+          baseData['Estado I-S'] = equipo.estado || '';
+        }
+        // Si es DESKTOP, usar la columna derecha (Estado CPU)
+        else if (equipo.tipo_equipo === 'DESKTOP') {
+          baseData['Estado CPU'] = equipo.estado || '';
+        }
+
+        return baseData;
+      });
 
       // Crear workbook
       const wb = XLSX.utils.book_new();

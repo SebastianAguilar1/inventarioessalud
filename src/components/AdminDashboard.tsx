@@ -103,7 +103,7 @@ export default function AdminDashboard({ usuario, setUsuario }: AdminDashboardPr
         {activeTab === 'formulario' ? (
           <FormularioInventario onSuccess={handleFormSubmit} />
         ) : (
-          <TablaInventario equipos={equipos} onRefresh={cargarEquipos} />
+          <TablaInventario equipos={equipos} onRefresh={cargarEquipos} usuarioActual={usuario} />
         )}
       </main>
     </div>
