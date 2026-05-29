@@ -59,7 +59,7 @@ export default function TablaInventario({ equipos, onRefresh, usuarioActual }: T
   };
 
   const handleEditChange = (field: string, value: string) => {
-    setEditData(prev => ({ ...prev, [field]: value }));
+    setEditData((prev: any) => ({ ...prev, [field]: value }));
   };
 
   const handleGuardarCambios = async () => {
